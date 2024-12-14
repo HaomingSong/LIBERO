@@ -99,3 +99,31 @@ def quat2axisangle(quat):
         return np.zeros(3)
 
     return (quat[:3] * 2.0 * math.acos(quat[3])) / den
+
+def eval_resume_logs(cfg):
+    with open(cfg.resume_path, "r") as f:
+        lines = f.readlines()
+    first_line = lines[0]
+    last_five_lines = lines[-5:]
+
+    task_suite_name = first_line.strip().split(" ")[-1]
+    assert task_suite_name == cfg.task_suite_name, f"Task suite name mismatch: {task_suite_name} vs {cfg.task_suite_name}"
+
+    cfg.task_description = last_five_lines[0].strip().split(": ")[-1]
+    cfg.task_episode_idx = int(last_five_lines[1].strip().split(" ")[-1].split("...")[0])
+    cfg.total_episodes = int(last_five_lines[3].strip().split(": ")[-1])
+    cfg.total_successes = int(last_five_lines[4].strip().split(" ")[2])
+
+    # process breaked task scuccesses nums
+    last_match_line = None
+    for idx, line in enumerate(lines):
+        if "Current task success rate:" in line:
+            last_match_line = idx
+
+    if last_match_line is None:
+        cfg.current_task_successes = 0
+    else:
+        cfg.current_task_successes = cfg.total_successes - int(lines[last_match_line-1].strip().split(" ")[2])
+
+
+

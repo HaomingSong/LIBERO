@@ -38,6 +38,7 @@ from libero_utils import (
     get_libero_image,
     quat2axisangle,
     save_rollout_video,
+    eval_resume_logs
 )
 from openvla_utils import get_processor
 from robot_utils import (
@@ -85,6 +86,7 @@ class GenerateConfig:
     wandb_entity: str = "YOUR_WANDB_ENTITY"          # Name of entity to log under
 
     seed: int = 7                                    # Random Seed (for reproducibility)
+    resume_path: Optional[str] = None                # Resume path for evaluation
 
     # fmt: on
 
@@ -99,6 +101,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
     assert not (
         cfg.load_in_8bit and cfg.load_in_4bit
     ), "Cannot use both 8-bit and 4-bit quantization!"
+    eval_resume_logs(cfg)
 
     # Set random seed
     set_seed_everywhere(cfg.seed)
@@ -106,7 +109,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
     # [OpenVLA] Set action un-normalization key
     cfg.unnorm_key = cfg.task_suite_name + "_no_noops/1.0.0"
     # Load model
-    model = get_model(cfg)
+    # model = get_model(cfg)
 
     # # [OpenVLA] Check that the model contains the action un-normalization key
     # if cfg.model_family == "openvla":
@@ -138,7 +141,9 @@ def eval_libero(cfg: GenerateConfig) -> None:
         run_id += f"--{cfg.run_id_note}"
     os.makedirs(cfg.local_log_dir, exist_ok=True)
     local_log_filepath = os.path.join(cfg.local_log_dir, run_id + ".txt")
-    log_file = open(local_log_filepath, "w")
+    if cfg.resume_path is not None:
+        local_log_filepath = cfg.resume_path
+    log_file = open(local_log_filepath, "a")
     print(f"Logging to local log file: {local_log_filepath}")
 
     # Initialize Weights & Biases logging as well
@@ -159,9 +164,20 @@ def eval_libero(cfg: GenerateConfig) -> None:
     # Get expected image dimensions
     resize_size = get_image_resize_size(cfg)
 
+    # resueme the task
+    if cfg.resume_path is not None:
+        total_episodes, total_successes = cfg.total_episodes, cfg.total_successes
+        for task_id in range(num_tasks_in_suite):
+            task = task_suite.get_task(task_id)
+            # Skip if task is not in the resume path
+            if task.language == cfg.task_description:
+                start_task_id = task_id
+                break
+    else:
+        total_episodes, total_successes, start_task_id = 0, 0, 0
+
     # Start evaluation
-    total_episodes, total_successes = 0, 0
-    for task_id in tqdm.tqdm(range(num_tasks_in_suite)):
+    for task_id in tqdm.tqdm(range(start_task_id, num_tasks_in_suite)):
         # Get task
         task = task_suite.get_task(task_id)
 
@@ -171,9 +187,16 @@ def eval_libero(cfg: GenerateConfig) -> None:
         # Initialize LIBERO environment and task description
         env, task_description = get_libero_env(task, cfg.model_family, resolution=256)
 
+        # resume the episode id
+        if cfg.resume_path is not None and task_id == start_task_id:
+            task_episodes = cfg.task_episode_idx
+            start_episode_idx = task_episodes + 1
+            task_successes = cfg.current_task_successes
+        else:
+            task_episodes, task_successes, start_episode_idx = 0, 0, 0
+
         # Start episodes
-        task_episodes, task_successes = 0, 0
-        for episode_idx in tqdm.tqdm(range(cfg.num_trials_per_task)):
+        for episode_idx in tqdm.tqdm(range(start_episode_idx, cfg.num_trials_per_task)):
             print(f"\nTask: {task_description}")
             log_file.write(f"\nTask: {task_description}\n")
 
@@ -230,7 +253,6 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     }
 
                     # Query model to get action
-                    # __import__('ipdb').set_trace()
                     action = get_action(
                         cfg,
                         model,
