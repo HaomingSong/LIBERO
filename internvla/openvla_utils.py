@@ -146,18 +146,19 @@ def get_vla_action(
     # __import__('ipdb').set_trace()
 
     prompt = task_label.lower()
-    inputs = processor(prompt, images, unnorm_key)
-    if hasattr(processor, "action_tokenizer"):
-        generation_outputs = vla.predict_action(**inputs)
+    inputs = processor(images=images, text=prompt, unnorm_key=unnorm_key, return_tensors="pt", do_normalize=False)
+    with torch.no_grad():
+        if hasattr(processor, "action_tokenizer"):
+            generation_outputs = vla.predict_action(inputs)
+            raw_actions = processor.decode_actions(
+                generation_outputs=generation_outputs,
+                unnorm_key=unnorm_key,
+            )["actions"]
+        else:
+            # __import__('ipdb').set_trace()
+            raw_actions = vla.predict_action(**inputs)["actions"]
+            raw_actions = raw_actions.cpu().numpy()
 
-        raw_actions = processor.decode_actions(
-            generation_outputs=generation_outputs,
-            unnorm_key=unnorm_key,
-        )["actions"]
-
-    else:
-        raw_actions = vla.predict_action(**inputs)["actions"]
-        raw_actions = raw_actions.cpu().numpy()
 
     if action_ensembler is not None:
         raw_actions = action_ensembler.ensemble_action(raw_actions)

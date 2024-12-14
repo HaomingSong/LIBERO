@@ -16,3 +16,9 @@ logs/
 *.mp4
 libero.egg-info/
 .vscode/
+pretrained/
+pretrained
+vla_pretrained
+pretrained
+pretrained
+vla_pretrained
