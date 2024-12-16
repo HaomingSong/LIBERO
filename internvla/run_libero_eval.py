@@ -101,7 +101,8 @@ def eval_libero(cfg: GenerateConfig) -> None:
     assert not (
         cfg.load_in_8bit and cfg.load_in_4bit
     ), "Cannot use both 8-bit and 4-bit quantization!"
-    eval_resume_logs(cfg)
+    if cfg.resume_path is not None:
+        eval_resume_logs(cfg)
 
     # Set random seed
     set_seed_everywhere(cfg.seed)
@@ -109,7 +110,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
     # [OpenVLA] Set action un-normalization key
     cfg.unnorm_key = cfg.task_suite_name + "_no_noops/1.0.0"
     # Load model
-    # model = get_model(cfg)
+    model = get_model(cfg)
 
     # # [OpenVLA] Check that the model contains the action un-normalization key
     # if cfg.model_family == "openvla":

@@ -8,7 +8,8 @@ ckpts_path=(
 )
 
 resume_path=(
-  # "--resume_path /new_home/haoming/projs/LIBERO/experiments/logs/EVAL-libero_spatial-openvla-2024_12_14-12_59_31.txt"
+  "--resume_path /new_home/haoming/projs/LIBERO/experiments/logs/EVAL-libero_spatial-openvla-2024_12_14-12_59_31.txt"
+  ""
 )
 
 for i in ${!ckpts_path[@]}; do
@@ -20,5 +21,7 @@ for i in ${!ckpts_path[@]}; do
     --model_family openvla \
     --pretrained_checkpoint $ckpt_path \
     --task_suite_name libero_spatial \
+    --num_trials_per_task 10 \
+    --run_id_note $(basename $ckpt_path) \
     --center_crop True $resume_path
 done

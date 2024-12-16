@@ -9,5 +9,7 @@ for ckpt_path in ${ckpts_path[@]}; do
     --model_family openvla \
     --pretrained_checkpoint $ckpt_path \
     --task_suite_name libero_object \
+    --num_trials_per_task 10 \
+    --run_id_note $(basename $ckpt_path)\
     --center_crop True
 done
