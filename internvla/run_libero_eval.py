@@ -28,6 +28,8 @@ import numpy as np
 import tqdm
 from libero.libero import benchmark
 
+from collections import deque
+import numpy as np
 import wandb
 
 # Append current directory so that interpreter can find experiments.robot
@@ -42,6 +44,8 @@ from libero_utils import (
 )
 from openvla_utils import get_processor
 from robot_utils import (
+    DATE,
+    TIME,
     DATE_TIME,
     get_action,
     get_image_resize_size,
@@ -52,7 +56,6 @@ from robot_utils import (
     get_obs_recoder,
     get_action_ensembler,
 )
-
 
 @dataclass
 class GenerateConfig:
@@ -79,7 +82,7 @@ class GenerateConfig:
     # Utils
     #################################################################################################################
     run_id_note: Optional[str] = None                # Extra note to add in run ID for logging
-    local_log_dir: str = "./experiments/logs"        # Local directory for eval logs
+    local_log_dir: str = "./experiments"        # Local directory for eval logs
 
     use_wandb: bool = False                          # Whether to also log results in Weights & Biases
     wandb_project: str = "YOUR_WANDB_PROJECT"        # Name of W&B project to log to (use default!)
@@ -88,7 +91,47 @@ class GenerateConfig:
     seed: int = 7                                    # Random Seed (for reproducibility)
     resume_path: Optional[str] = None                # Resume path for evaluation
 
+    # AdaptiveEnsembler
+    ensembler: str = "vanilla"
+
     # fmt: on
+
+
+class AdaptiveEnsembler:
+    def __init__(self, pred_action_horizon, adaptive_ensemble_alpha=0.0):
+        self.pred_action_horizon = pred_action_horizon
+        self.action_history = deque(maxlen=self.pred_action_horizon)
+        self.adaptive_ensemble_alpha = adaptive_ensemble_alpha
+
+    def reset(self):
+        self.action_history.clear()
+
+    def ensemble_action(self, cur_action):
+        self.action_history.append(cur_action)
+        num_actions = len(self.action_history)
+        if cur_action.ndim == 1:
+            curr_act_preds = np.stack(self.action_history)
+        else:
+            curr_act_preds = np.stack(
+                [pred_actions[i] for (i, pred_actions) in zip(range(num_actions - 1, -1, -1), self.action_history)]
+            )
+
+        # calculate cosine similarity between the current prediction and all previous predictions
+        ref = curr_act_preds[num_actions-1, :]
+        previous_pred = curr_act_preds
+        dot_product = np.sum(previous_pred * ref, axis=1)  
+        norm_previous_pred = np.linalg.norm(previous_pred, axis=1)  
+        norm_ref = np.linalg.norm(ref)  
+        cos_similarity = dot_product / (norm_previous_pred * norm_ref + 1e-7)
+
+        # compute the weights for each prediction
+        weights = np.exp(self.adaptive_ensemble_alpha * cos_similarity)
+        weights = weights / weights.sum()
+  
+        # compute the weighted average across all predictions for this timestep
+        cur_action = np.sum(weights[:, None] * curr_act_preds, axis=0)
+
+        return cur_action
 
 
 @draccus.wrap()
@@ -106,6 +149,13 @@ def eval_libero(cfg: GenerateConfig) -> None:
 
     # Set random seed
     set_seed_everywhere(cfg.seed)
+
+    # 
+    if cfg.task_suite_name == "auto":
+        from pathlib import Path
+        s =  Path(cfg.pretrained_checkpoint).parts[-2].split("_")[1:3]
+        cfg.task_suite_name = "_".join(s)
+        print(f"🤗 aotomatically obtain task name *{cfg.task_suite_name}")
 
     # [OpenVLA] Set action un-normalization key
     cfg.unnorm_key = cfg.task_suite_name + "_no_noops/1.0.0"
@@ -125,23 +175,30 @@ def eval_libero(cfg: GenerateConfig) -> None:
     if cfg.model_family == "openvla":
         processor = get_processor(cfg)
 
-    if hasattr(processor, "action_chunk_size"):
-        action_ensembler = get_action_ensembler(
-            processor=processor, action_ensemble_temp=-0.8
-        )
+    # TODO: change ensembler
+    if not hasattr(processor, "action_chunk_size"):
+        action_ensembler = None
+    elif cfg.ensembler == "vanilla":
+        action_ensembler = get_action_ensembler(processor=processor, action_ensemble_temp=-0.8)
+    elif cfg.ensembler == "adpt":
+        action_ensembler = AdaptiveEnsembler(pred_action_horizon=processor.action_chunk_size, adaptive_ensemble_alpha=0.1)
     else:
         action_ensembler = None
+    print(f"🔥 use action_ensembler {action_ensembler}")
+
     if hasattr(processor, "num_obs_steps"):
         obs_recoder = get_obs_recoder(processor=processor)
     else:
         obs_recoder = None
 
     # Initialize local logging
-    run_id = f"EVAL-{cfg.task_suite_name}-{cfg.model_family}-{DATE_TIME}"
+    run_id = TIME
     if cfg.run_id_note is not None:
-        run_id += f"--{cfg.run_id_note}"
+        run_id += f"-{cfg.run_id_note}-p{cfg.num_trials_per_task}"
+    cfg.local_log_dir = os.path.join(cfg.local_log_dir, f"{cfg.task_suite_name}-{DATE}")
     os.makedirs(cfg.local_log_dir, exist_ok=True)
     local_log_filepath = os.path.join(cfg.local_log_dir, run_id + ".txt")
+    
     if cfg.resume_path is not None:
         local_log_filepath = cfg.resume_path
     log_file = open(local_log_filepath, "a")
@@ -202,7 +259,11 @@ def eval_libero(cfg: GenerateConfig) -> None:
             log_file.write(f"\nTask: {task_description}\n")
 
             # Reset environment
+            print(f"🔥 reset cache")
             env.reset()
+            # model._cache.reset()
+            if action_ensembler: action_ensembler.reset()
+            if obs_recoder: obs_recoder.reset()
 
             # Set initial states
             obs = env.set_init_state(initial_states[episode_idx])
@@ -210,14 +271,26 @@ def eval_libero(cfg: GenerateConfig) -> None:
             # Setup
             t = 0
             replay_images = []
+            obs_images = []
+            # if cfg.task_suite_name == "libero_spatial":
+            #     max_steps = 220  # longest training demo has 193 steps
+            # elif cfg.task_suite_name == "libero_object":
+            #     max_steps = 280  # longest training demo has 254 steps
+            # elif cfg.task_suite_name == "libero_goal":
+            #     max_steps = 300  # longest training demo has 270 steps
+            # elif cfg.task_suite_name == "libero_10":
+            #     max_steps = 520  # longest training demo has 505 steps
+            # elif cfg.task_suite_name == "libero_90":
+            #     max_steps = 400  # longest training demo has 373 steps
+
             if cfg.task_suite_name == "libero_spatial":
-                max_steps = 220  # longest training demo has 193 steps
+                max_steps = 300  # longest training demo has 193 steps
             elif cfg.task_suite_name == "libero_object":
-                max_steps = 280  # longest training demo has 254 steps
+                max_steps = 350  # longest training demo has 254 steps
             elif cfg.task_suite_name == "libero_goal":
-                max_steps = 300  # longest training demo has 270 steps
+                max_steps = 400  # longest training demo has 270 steps
             elif cfg.task_suite_name == "libero_10":
-                max_steps = 520  # longest training demo has 505 steps
+                max_steps = 600  # longest training demo has 505 steps
             elif cfg.task_suite_name == "libero_90":
                 max_steps = 400  # longest training demo has 373 steps
 
@@ -228,14 +301,15 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     # IMPORTANT: Do nothing for the first few timesteps because the simulator drops objects
                     # and we need to wait for them to fall
                     if t < cfg.num_steps_wait:
-                        obs, reward, done, info = env.step(
-                            get_libero_dummy_action(cfg.model_family)
-                        )
+                        obs, reward, done, info = env.step(get_libero_dummy_action(cfg.model_family))
                         t += 1
                         continue
+                    
+                    obs_images.append(obs["agentview_image"][::-1, ::-1].copy())
 
                     # Get preprocessed image
                     img = get_libero_image(obs, resize_size)
+                    
 
                     # Save preprocessed image for replay video
                     replay_images.append(img)
@@ -245,11 +319,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     observation = {
                         "full_image": img,
                         "state": np.concatenate(
-                            (
-                                obs["robot0_eef_pos"],
-                                quat2axisangle(obs["robot0_eef_quat"]),
-                                obs["robot0_gripper_qpos"],
-                            )
+                            (obs["robot0_eef_pos"], quat2axisangle(obs["robot0_eef_quat"]), obs["robot0_gripper_qpos"])
                         ),
                     }
 
@@ -290,13 +360,15 @@ def eval_libero(cfg: GenerateConfig) -> None:
 
             # Save a replay video of the episode
             # NOTE: close video saving
-            # save_rollout_video(
-            #     replay_images,
-            #     total_episodes,
-            #     success=done,
-            #     task_description=task_description,
-            #     log_file=log_file,
-            # )
+            save_rollout_video(
+                # replay_images,
+                obs_images,
+                total_episodes,
+                success=done,
+                task_description=task_description,
+                log_file=log_file,
+                rollout_dir = f"./rollouts/{cfg.local_log_dir}/{run_id}"
+            )
 
             # Log current results
             print(f"Success: {done}")

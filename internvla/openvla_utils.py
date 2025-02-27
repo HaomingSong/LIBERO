@@ -23,18 +23,20 @@ def get_vla(cfg):
     """Loads and returns a VLA model from checkpoint."""
     # Load VLA checkpoint.
     print("[*] Instantiating Pretrained VLA model")
-    print("[*] Loading in BF16 with Flash-Attention Enabled")
+    print("[*] Loading in BF16 with Flash-Attention Enabled?")
 
     vla = (
         AutoModel.from_pretrained(
             cfg.pretrained_checkpoint,
             torch_dtype=torch.bfloat16,
             trust_remote_code=True,
-        )
-        .eval()
-        .cuda()
+        ).eval().cuda()
     )
 
+    # vla.language_model.config._attn_implementation = vla.vision_tower.config._attn_implementation = "flash_attention_2"
+    # print(f"🔥 language model {vla.language_model.config._attn_implementation}, vision model: {vla.vision_tower.config._attn_implementation}")
+    # vla.language_model.config._attn_implementation_internal = vla.vision_tower.config._attn_implementation_internal = "flash_attention_2"
+    # print(f"🔥 language model {vla.language_model.config._attn_implementation}, vision model: {vla.vision_tower.config._attn_implementation}")
     return vla
 
 
@@ -138,15 +140,16 @@ def get_vla_action(
         image = Image.fromarray(image.numpy())
         image = image.convert("RGB")
 
-        if obs_recoder is not None:
-            obs_recoder.add_image_to_history(image)
-            images: List[Image.Image] = obs_recoder.obtain_image_history()
-        else:
-            images = image
+    if obs_recoder is not None:
+        obs_recoder.add_image_to_history(image)
+        images: List[Image.Image] = obs_recoder.obtain_image_history()
+    else:
+        images = image
     # __import__('ipdb').set_trace()
 
     prompt = task_label.lower()
     inputs = processor(images=images, text=prompt, unnorm_key=unnorm_key, return_tensors="pt", do_normalize=False)
+    # __import__('ipdb').set_trace()
     with torch.no_grad():
         if hasattr(processor, "action_tokenizer"):
             generation_outputs = vla.predict_action(inputs)
@@ -155,12 +158,12 @@ def get_vla_action(
                 unnorm_key=unnorm_key,
             )["actions"]
         else:
-            # __import__('ipdb').set_trace()
             raw_actions = vla.predict_action(**inputs)["actions"]
             raw_actions = raw_actions.cpu().numpy()
 
-
     if action_ensembler is not None:
         raw_actions = action_ensembler.ensemble_action(raw_actions)
+    else:
         # raw_actions = raw_actions[None]
+        raw_actions = raw_actions[0]
     return raw_actions

@@ -1,0 +1,411 @@
+ckpts_path=(
+    # [80+] /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-26/12_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_oxe-_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/06_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_spa_gs/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_spa_gs_eh/checkpoint-10000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/15_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+lm_head_spa_gs_eh/checkpoint-10000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-26/12_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_oxe-_gs/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/06_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_spa_gs/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-25/12_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_gs/checkpoint-50000 [1debug6]
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-25/12_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_oxe_gs/checkpoint-50000 [1debug3]
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/06_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_spa_gs/checkpoint-40000 [1debug1]
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_spa_gs_eh/checkpoint-20000 # [libero1]
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/15_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+lm_head_spa_gs_eh/checkpoint-20000 # [libero2]
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/15_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-20000 #[libero3]
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/17_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-20000 #[libero4]
+
+    # 12-28
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/15_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-26/12_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_oxe-_gs/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/06_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_spa_gs/checkpoint-50000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear++_spa_gs_eh/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/15_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+lm_head_spa_gs_eh/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/15_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/01_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-20000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/17_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/09_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-10000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/15_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-62100
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/17_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-27/17_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-62100
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/01_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_spa_gs/checkpoint-20000    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_spa_gs/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-20000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/01_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/01_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-62100
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/09_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_spa_gs/checkpoint-30000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_spa_gs/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr2.5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/09_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_spa_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs_bf13/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-20000
+
+
+    # [sota] /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/01_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-50000 libero 1
+    # [sota] /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/01_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-62100
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/09_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_spa_gs/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs_bf13/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/16_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-20000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/17_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_obj_gs/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/19_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_obj_gs/checkpoint-20000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-28/18_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_spa_gs/checkpoint-62100
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs_bf13/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/16_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-30000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/17_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_obj_gs/checkpoint-30000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/23_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a64_ep150_all-linear+emb_oxe_gs/checkpoint-20000 # cuda1
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/00_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr1e-3_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-20000 # cuda2
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/00_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr8e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-20000 #cuda0
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/19_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_obj_gs/checkpoint-30000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs_bf13/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/16_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/17_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_obj_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/19_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_obj_gs/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/23_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a64_ep150_all-linear+emb_oxe_gs/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/00_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr1e-3_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/00_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr8e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs_bf13/checkpoint-62100
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/08_libero_spatial_no_noops_oxe_paligemma3b_zoe_obs14_N1026_gpu48_checkpoint_230770_stage2_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_gs/checkpoint-62100
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/16_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/17_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_obj_gs/checkpoint-50000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/19_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_obj_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/23_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a64_ep150_all-linear+emb_oxe_gs/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/00_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr1e-3_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/00_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr8e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/09_libero_goal_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/13_libero_10_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe/checkpoint-20000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/02_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_adpt/checkpoint-10000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/02_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_adpt/checkpoint-10000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/16_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/17_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_obj_gs/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/19_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_obj_gs/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/23_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a64_ep150_all-linear+emb_oxe_gs/checkpoint-50000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/00_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr1e-3_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/00_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr8e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-50000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/09_libero_goal_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/13_libero_10_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/02_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_adpt/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_oxe_adpt_save/checkpoint-10000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_oxe_lora/checkpoint-10000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/19_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_obj_gs/checkpoint-78600
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/09_libero_goal_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe/checkpoint-61050
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/13_libero_10_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe/checkpoint-50000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-10000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-10000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-10000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-10000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/13_libero_10_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe/checkpoint-70000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-20000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-20000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/02_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_adpt/checkpoint-50000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/02_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb+h_oxe_adpt/checkpoint-10000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_oxe_adpt_save/checkpoint-30000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_oxe_lora/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-30/13_libero_10_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe/checkpoint-80000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-30000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_oxe_adpt_save/checkpoint-40000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_oxe_lora/checkpoint-40000
+
+    # [sota]
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/16_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-29/16_libero_object_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_gs/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-10000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-20000
+
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-70000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-70000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-70000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-70000
+     
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-40000
+
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-80000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-81400
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-90000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-82800
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-50000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-20000
+
+    # [sota]
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-60000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-90000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-100000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-104800
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-62100
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-30000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/14_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/20_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-20000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Adpt/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/14_libero_spatial_no_noops_oxe_kuka_fmb_paligemma_3b_obs14_N8194_lr2e-5_gpu48_checkpoint_120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_oxe_adpt_save/checkpoint-62100
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-110000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-60000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-01/16_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-78600
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-50000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/14_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/20_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2024-12-31/18_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-120000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-61050
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-60000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/14_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/20_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/08_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/08_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-20000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/10_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_spa_smp/checkpoint-62100
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/14_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-60000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/14_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-70000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/20_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/20_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/08_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/08_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/13_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-30000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/14_libero_object_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-78600
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/20_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-70000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/08_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/08_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-50000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/13_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-40000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-02/20_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_obj_smp/checkpoint-80000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/08_libero_10_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-60000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/08_libero_goal_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_oxe_smp_gs/checkpoint-61050
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/13_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-50000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/13_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-03/13_libero_spatial_no_noops_simplerenv_zoe_N8194_uniform_gpu8_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_oxe_smp/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_ten_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_goa_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_object_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_obj_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_object_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_spatial_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/23_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_ten_sigma0_4/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/23_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_goa_sigma0_4/checkpoint-40000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-60000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_object_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_object_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-70000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-61050
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-80000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_object_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-78600
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-06/10_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_smp2_ten_sigma0_adpt/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-06/10_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_smp2_goa_sigma0_adpt/checkpoint-20000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-06/10_libero_object_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_smp2_obj_sigma0_adpt/checkpoint-20000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-90000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_ten_sigma0/checkpoint-90000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-61050
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_object_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-78600
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-04/22_libero_spatial_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp2_sigma0/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-06/10_libero_10_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_smp2_ten_sigma0_adpt/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-06/10_libero_goal_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_smp2_goa_sigma0_adpt/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-06/10_libero_object_no_noops_simpler_env2_zoe_uniform8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear_smp2_obj_sigma0_adpt/checkpoint-40000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/12_libero_object_no_noops_simpler_env3_zoe_gs8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp3_sigma0_5/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/19_libero_object_no_noops_simpler_env3_zoe_gs8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp3_sigma0_adpt/checkpoint-20000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/12_libero_object_no_noops_simpler_env3_zoe_gs8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp3_sigma0_5/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/19_libero_object_no_noops_simpler_env3_zoe_gs8194_checkpoint120000_lr5e-4_bs32_node1_gpu4_r32_a32_ep150_all-linear+emb_smp3_sigma0_adpt/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/20_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_10_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-30000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-40000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-40000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/20_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_10_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-50000    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-50000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-08/18_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_sigma0_bs/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt_fea/checkpoint-20000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt_fea/checkpoint-20000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-08/18_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_sigma0_bs/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-08/03_libero_10_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-50000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-60000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_10_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/20_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-60000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-08/03_libero_10_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-60000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-08/18_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_sigma0_bs/checkpoint-40000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt/checkpoint-30000
+    
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt_fea/checkpoint-30000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt_fea/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe-Dev/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-09/00_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_smp4_adpt_fea/checkpoint-50000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_object_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-70000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0_adpt/checkpoint-70000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-70000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_10_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-70000
+
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-10/15_libero_goal_no_noops_2025-01-05_09-12-37_oxe_spatial_vla_paligemma3b_zoe_gsN8194_gpu64-120k_lr2e-5_bs32_node1_gpu4_r0_a0_ep200_none_oxe_adpt_fea_sft/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-10/20_libero_goal_no_noops_2025-01-05_09-12-37_oxe_spatial_vla_paligemma3b_zoe_gsN8194_gpu64-120k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_oxe_adpt_fea/checkpoint-40800
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-11/17_libero_10_no_noops_2025-01-05_09-12-37_oxe_spatial_vla_paligemma3b_zoe_gsN8194_gpu64-120k_lr2e-5_bs32_node1_gpu4_r0_a0_ep200_none_oxe_adpt_fea_sft/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-11/19_libero_goal_no_noops_2025-01-05_09-12-37_oxe_spatial_vla_paligemma3b_zoe_gsN8194_gpu64-160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_oxe/checkpoint-30000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-11/19_libero_goal_no_noops_2025-01-05_09-12-37_oxe_spatial_vla_paligemma3b_zoe_gsN8194_gpu64-160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_oxe_adpt_fea/checkpoint-30000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-07/21_libero_goal_no_noops_simpler_env4_zoe_gs8194_checkpoint160k_lr5e-4_bs32_node1_gpu4_r32_a32_ep200_all-linear+emb_smp4_sigma0/checkpoint-70000
+
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-11/17_libero_10_no_noops_2025-01-05_09-12-37_oxe_spatial_vla_paligemma3b_zoe_gsN8194_gpu64-120k_lr2e-5_bs32_node1_gpu4_r0_a0_ep200_none_oxe_adpt_fea_sft/checkpoint-40000
+    # /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-11/19_libero_goal_no_noops_2025-01-05_09-12-37_oxe_spatial_vla_paligemma3b_zoe_gsN8194_gpu64-160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_oxe/checkpoint-40000
+    /cpfs01/shared/optimal/vla_ptm/SpatialVLA-PaliGemma-Zoe/outputs/spatialvla_v1_paligemma2_3b_finetune/2025-01-11/19_libero_goal_no_noops_2025-01-05_09-12-37_oxe_spatial_vla_paligemma3b_zoe_gsN8194_gpu64-160k_lr5e-4_bs32_node1_gpu8_r32_a32_ep200_all-linear+emb_oxe_adpt_fea/checkpoint-40000
+)
+
+# ensembler=vanilla
+ensembler=adpt
+
+for i in ${!ckpts_path[@]}; do
+  ckpt_path=${ckpts_path[$i]}
+  echo "🎃$ckpt_path"
+  # Launch LIBERO-Spatial evals
+  CUDA_VISIBLE_DEVICES=0 python internvla/run_libero_eval.py \
+    --model_family openvla \
+    --pretrained_checkpoint $ckpt_path \
+    --task_suite_name auto \
+    --num_trials_per_task 10 \
+    --run_id_note $(basename $(dirname $ckpt_path))_$(basename $ckpt_path)_${ensembler} \
+    --ensembler ${ensembler}
+done
